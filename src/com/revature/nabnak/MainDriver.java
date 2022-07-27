@@ -4,11 +4,19 @@ package com.revature.nabnak;
     The goal is to allow members to join the application, be assigned part of a team and shard their kanban cards.
 */
 
+import com.revature.nabnak.models.Member;
+
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 public class MainDriver {
+
+    // Problem we run into is actually receiving information from a user
+    // Instance of BufferedReader to get user input from the terminal
+    // DRY Princle = DONT REPEAT YOURSELF
+    static BufferedReader terminalReader = new BufferedReader(new InputStreamReader(System.in));
+
     public static void main(String[] args) {
 
         // Define the datatype in the array and this is the only acceptable datatype
@@ -27,9 +35,7 @@ public class MainDriver {
 
         // System.out.println(welcomeMessages[4]); // this will throw an ArrayIndexOutOfBoundsException
 
-        // Problem we run into is actually receiving information from a user
-        // Instance of BufferedReader to get user input from the terminal
-        BufferedReader terminalReader = new BufferedReader(new InputStreamReader(System.in));
+
 
         // try-catch blocks are a major way to handle exceptions
         try { // try-block leverages risky code that might throw an Exception
@@ -53,32 +59,7 @@ public class MainDriver {
                     break; // the keyword break prevents any fall-through
                 case "2":
                     System.out.println("User has selected register....");
-
-                    System.out.print("Please enter email: \n>"); // \n is a new line character, aka return or enter
-                    String email = terminalReader.readLine();
-
-                    System.out.print("Please enter your first and last name: \n>");
-                    String fullName = terminalReader.readLine();
-
-                    System.out.print("Please enter your experience in months: \n>");
-                    String experienceMonths = terminalReader.readLine();
-
-                    String registrationDate = LocalDateTime.now().toString();
-
-                    // This is a form of logging
-                    System.out.printf("New user has registerd under \n User:%s,%s,%s,%s", email, fullName, experienceMonths, registrationDate).println(); //printf is a formatter
-
-                    File memoryFile = new File("resources/data.txt");
-
-                    // This beaut, is a try-with-resources block. This allows for anything that extends AutoClosable to be automatically closed
-                    try(FileWriter fileWriter = new FileWriter(memoryFile, true);) {
-                        String output = email + "," + fullName + "," + experienceMonths + "," + registrationDate + "\n";
-                        fileWriter.write(output);
-                    } catch (IOException e){
-                        e.printStackTrace();
-                    }
-                   // fileWriter.close(); // be mindful to always close
-
+                    register(); // register() the () INVOKE the method189
                     break;
                 // case "i": // example of fall through
                 case "3":
@@ -94,8 +75,47 @@ public class MainDriver {
         }
     }
 
-    public static void register(){
+    public static void register() throws IOException{ // throws + ExceptionName is known as ducking
+        // ducking means passing the responsibilty of handling that exception to the code that's calling it
+        // Problem terminalReader is not within this scope? Solution:
+        System.out.print("Please enter email: \n>"); // \n is a new line character, aka return or enter
+        String email = terminalReader.readLine();
 
+        System.out.print("Please enter your first and last name: \n>");
+        String fullName = terminalReader.readLine();
+
+        System.out.print("Please enter your experience in months: \n>");
+        String experienceMonths = terminalReader.readLine();
+
+        String registrationDate = LocalDateTime.now().toString();
+
+        // This is a form of logging
+        // System.out.printf("New user has registerd under \n User:%s,%s,%s,%s", email, fullName, experienceMonths, registrationDate).println(); //printf is a formatter
+
+        File memoryFile = new File("resources/data.txt");
+        // This beaut, is a try-with-resources block. This allows for anything that extends AutoClosable to be automatically closed
+        try(FileWriter fileWriter = new FileWriter(memoryFile, true);) {
+
+            Member member = new Member(email, fullName, Integer.parseInt(experienceMonths), registrationDate);
+            // this is an old school and rather poor way
+//            member.email = email;
+//            member.fullName = fullName;
+//            member.experienceMonths = Integer.parseInt(experienceMonths); // user the primitive's Wrapper Class to convert
+//            member.registrationDate = registrationDate;
+
+            System.out.println(member.getPassword());
+
+            member.setPassword("12345");
+            System.out.println(member.getPassword());
+
+            System.out.println("New user has registered: " + member.toString());
+
+            Member member2 = new Member();
+            fileWriter.write(member.writeToFile());
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        // fileWriter.close(); // be mindful to always close
 
     }
 }
