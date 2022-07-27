@@ -4,9 +4,7 @@ package com.revature.nabnak;
     The goal is to allow members to join the application, be assigned part of a team and shard their kanban cards.
 */
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -67,7 +65,19 @@ public class MainDriver {
 
                     String registrationDate = LocalDateTime.now().toString();
 
+                    // This is a form of logging
                     System.out.printf("New user has registerd under \n User:%s,%s,%s,%s", email, fullName, experienceMonths, registrationDate).println(); //printf is a formatter
+
+                    File memoryFile = new File("resources/data.txt");
+
+                    // This beaut, is a try-with-resources block. This allows for anything that extends AutoClosable to be automatically closed
+                    try(FileWriter fileWriter = new FileWriter(memoryFile, true);) {
+                        String output = email + "," + fullName + "," + experienceMonths + "," + registrationDate + "\n";
+                        fileWriter.write(output);
+                    } catch (IOException e){
+                        e.printStackTrace();
+                    }
+                   // fileWriter.close(); // be mindful to always close
 
                     break;
                 // case "i": // example of fall through
@@ -82,6 +92,10 @@ public class MainDriver {
         } catch (IOException e){ // Catches that exception and assigns to variable e
             e.printStackTrace();
         }
+    }
+
+    public static void register(){
+
 
     }
 }
