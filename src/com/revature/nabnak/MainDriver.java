@@ -5,5 +5,6 @@ public class MainDriver {
         System.out.println("Hi");
         System.out.println("Simple change");
         System.out.println("Another simple update");
+        System.out.println("show merge conflict");
     }
 }
