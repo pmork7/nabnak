@@ -1,6 +1,7 @@
 package com.revature.nabnak.menus;
 
 import com.revature.nabnak.models.Member;
+import com.revature.nabnak.services.MemberService;
 import com.revature.nabnak.util.MenuRouter;
 
 import java.io.BufferedReader;
@@ -15,7 +16,7 @@ public class RegisterMenu extends Menu{
     }
 
     @Override
-    public void render() throws Exception{
+    public void render() throws IOException{
         System.out.print("Please enter email: \n>"); // \n is a new line character, aka return or enter
         String email = terminalReader.readLine();
 
@@ -23,7 +24,17 @@ public class RegisterMenu extends Menu{
         String fullName = terminalReader.readLine();
 
         System.out.print("Please enter your experience in months: \n>");
-        String experienceMonths = terminalReader.readLine();
+        int experienceMonths = 0;
+        try {
+            experienceMonths = Integer.parseInt(terminalReader.readLine());
+        } catch (NumberFormatException e){
+            e.printStackTrace();
+            System.out.println("Invalid number enter please try the registration again");
+            menuRouter.transfer("/welcome");
+        }
+        System.out.print("Please enter your password: \n>");
+        String password = terminalReader.readLine();
+
 
         // TODO: What on god's green earth is LocalDateTime?
         String registrationDate = LocalDateTime.now().toString();
@@ -31,24 +42,10 @@ public class RegisterMenu extends Menu{
         // This is a form of logging
         // System.out.printf("New user has registerd under \n User:%s,%s,%s,%s", email, fullName, experienceMonths, registrationDate).println(); //printf is a formatter
 
-        File memoryFile = new File("resources/data.txt");
-        // This beaut, is a try-with-resources block. This allows for anything that extends AutoClosable to be automatically closed
-        try (FileWriter fileWriter = new FileWriter(memoryFile, true);) {
-
-            Member member = new Member(email, fullName, Integer.parseInt(experienceMonths), registrationDate);
-
-            System.out.println(member.getPassword());
-
-            member.setPassword("12345");
-            System.out.println(member.getPassword());
-
-            System.out.println("New user has registered: " + member.toString());
-
-            Member member2 = new Member();
-            fileWriter.write(member.writeToFile());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Member newMember = new Member(email, fullName, experienceMonths, registrationDate, password);
+        // TODO: LOGG INFO AS ENTER customerLogger.log(arguments)
+        MemberService memberService = new MemberService();
+        memberService.registerMember(newMember);
 
         menuRouter.transfer("/dashboard");
     }

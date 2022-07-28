@@ -3,6 +3,7 @@ package com.revature.nabnak.menus;
 import com.revature.nabnak.util.MenuRouter;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 
 public abstract class Menu { // abstract classs
     protected String name; // this only allows any class within the package or sub-class (any extending Menu) to have access to this attribute
@@ -26,5 +27,5 @@ public abstract class Menu { // abstract classs
     }
 
     // Adding abstract keyword requires that any class that inherits this Menu class MUST implement it
-    public abstract void render() throws Exception;
+    public abstract void render() throws IOException;
 }

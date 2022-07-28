@@ -15,7 +15,7 @@ public class WelcomeMenu extends Menu {
     }
 
     @Override // this indicates we are overriding the method we are inheriting
-    public void render() throws Exception {
+    public void render() throws IOException {
 
         String[] welcomeMessages = {"Welcome to Nabnak", "1) Login", "2) Register", "3) View members", "4) Exit application"};
 

@@ -3,6 +3,7 @@ package com.revature.nabnak.menus;
 import com.revature.nabnak.util.MenuRouter;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 
 import static com.revature.nabnak.util.AppState.shutdown;
 
@@ -12,7 +13,7 @@ public class DashboardMenu extends Menu{
     }
 
     @Override
-    public void render() throws Exception {
+    public void render() throws IOException {
         System.out.println("Welcome to your dashboard!\n 1) Make a card \n 2) Exit Application" );
 
         String userInput = terminalReader.readLine();

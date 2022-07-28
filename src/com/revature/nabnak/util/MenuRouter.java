@@ -2,6 +2,8 @@ package com.revature.nabnak.util;
 
 import com.revature.nabnak.menus.Menu;
 
+import java.io.IOException;
+
 public class MenuRouter {
 
     private final Menu[] menus;
@@ -27,7 +29,7 @@ public class MenuRouter {
             if(menu.getRoute().equals(route)){
                 try {
                     menu.render();
-                } catch (Exception e){
+                } catch (IOException e){
                     e.printStackTrace();
                 }
             }
