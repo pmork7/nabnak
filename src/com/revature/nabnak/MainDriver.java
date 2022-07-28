@@ -4,8 +4,11 @@ package com.revature.nabnak;
     The goal is to allow members to join the application, be assigned part of a team and shard their kanban cards.
 */
 
+import com.revature.nabnak.menus.DashboardMenu;
+import com.revature.nabnak.menus.RegisterMenu;
 import com.revature.nabnak.menus.WelcomeMenu;
 import com.revature.nabnak.models.Member;
+import com.revature.nabnak.util.MenuRouter;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -16,11 +19,22 @@ public class MainDriver {
 
     public static void main(String[] args) {
 
+        boolean isRunning = true;
+
         BufferedReader terminalReader = new BufferedReader(new InputStreamReader(System.in));
+        MenuRouter menuRouter = new MenuRouter();
 
-        WelcomeMenu welcomeMenu = new WelcomeMenu(terminalReader);
+        WelcomeMenu welcomeMenu = new WelcomeMenu(terminalReader, menuRouter);
+        RegisterMenu registerMenu = new RegisterMenu(terminalReader, menuRouter);
+        DashboardMenu dashboardMenu = new DashboardMenu(terminalReader, menuRouter);
 
-        welcomeMenu.render();
+        menuRouter.addMenu(welcomeMenu);
+        menuRouter.addMenu(registerMenu);
+        menuRouter.addMenu(dashboardMenu);
+
+        while (isRunning) {
+            menuRouter.transfer("/welcome");
+        }
 
     }
 
