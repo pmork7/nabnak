@@ -26,30 +26,12 @@ public class MainDriver {
         System.out.println(welcomeMessages[0]);
         System.out.println(welcomeMessages[1]);
         System.out.println(welcomeMessages[2]);
-        // System.out.println(welcomeMessages[3]);
-        welcomeMessages[3] = "3) Exit Application"; // values at indices can be reassigned but not mutated
-        // At line 18, the "3) Exit application is removed from the String and memory via garbage collection
-        // Note: GC, cannot be FORCED. It can be suggested like the command below
-        // System.gc(); // One of those questions
         System.out.println(welcomeMessages[3]);
-
-        // System.out.println(welcomeMessages[4]); // this will throw an ArrayIndexOutOfBoundsException
-
-
+        System.out.println(welcomeMessages[3]);
 
         // try-catch blocks are a major way to handle exceptions
         try { // try-block leverages risky code that might throw an Exception
             String firstInput = terminalReader.readLine(); // it throws an IOException, this MUST be handled before compile time (checked)
-//
-//            if(firstInput.equals("1")){
-//                System.out.println("User has selected login....");
-//            } else if(firstInput.equals("2")){
-//                System.out.println("User has selected register....");
-//            } else if (firstInput.equals("3")) {
-//                System.out.println("User is not exiting. Hope to see you soon!");
-//            } else {
-//                System.out.println("User has not selected anything");
-//            }
 
             // if your switch cases don't handle control flow it will result in fall-through
             // can be advantageous
@@ -75,6 +57,7 @@ public class MainDriver {
         }
     }
 
+    // Custom method to implement a registration process
     public static void register() throws IOException{ // throws + ExceptionName is known as ducking
         // ducking means passing the responsibilty of handling that exception to the code that's calling it
         // Problem terminalReader is not within this scope? Solution:
@@ -87,6 +70,7 @@ public class MainDriver {
         System.out.print("Please enter your experience in months: \n>");
         String experienceMonths = terminalReader.readLine();
 
+        // TODO: What on god's green earth is LocalDateTime? 
         String registrationDate = LocalDateTime.now().toString();
 
         // This is a form of logging
@@ -97,11 +81,6 @@ public class MainDriver {
         try(FileWriter fileWriter = new FileWriter(memoryFile, true);) {
 
             Member member = new Member(email, fullName, Integer.parseInt(experienceMonths), registrationDate);
-            // this is an old school and rather poor way
-//            member.email = email;
-//            member.fullName = fullName;
-//            member.experienceMonths = Integer.parseInt(experienceMonths); // user the primitive's Wrapper Class to convert
-//            member.registrationDate = registrationDate;
 
             System.out.println(member.getPassword());
 
@@ -115,7 +94,5 @@ public class MainDriver {
         } catch (IOException e){
             e.printStackTrace();
         }
-        // fileWriter.close(); // be mindful to always close
-
     }
 }
