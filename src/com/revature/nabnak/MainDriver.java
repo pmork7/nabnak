@@ -47,8 +47,8 @@ public class MainDriver {
                 // case "i": // example of fall through
                 case "3":
                     System.out.println("User wishes to view other members");
-                    String[] members = readFile();
-                    for(String member: members){ // enhanced for loop with arrays
+                    Member[] members = readFile();
+                    for(Member member: members){ // enhanced for loop with arrays
                         System.out.println(member);
                     }
                     break;
@@ -107,8 +107,8 @@ public class MainDriver {
         }
     }
 
-    public static String[] readFile(){ // we want to return information from this method
-        String[] members = new String[10];
+    public static Member[] readFile(){ // we want to return information from this method
+        Member[] members = new Member[10];
 
         // try-with-resources automatically closes files for us
         try(
@@ -120,7 +120,15 @@ public class MainDriver {
             int index = 0;
 
             while(line != null){
-                members[index] = line;
+                String[] info = line.split(",");
+                Member member = new Member();
+                member.setEmail(info[0]);
+                member.setFullName(info[1]);
+                // Wrapper classes auto box (can convert back to the primitive value)
+                member.setExperienceMonths(Integer.parseInt(info[2])); // how does the Integer Class become the primitive int?
+                member.setRegistrationDate(info[3]);
+                member.setPassword(info[4]);
+                members[index] = member; // swapped from String line to Member member (this requires a datatype of member)
                 index++;
                 line = reader.readLine(); // this reassign line and if there aare no more values in the file it will result in a null
             }
