@@ -19,14 +19,15 @@ public class MainDriver {
 
     public static void main(String[] args) {
 
+        boolean isRunning = true;
         // Define the datatype in the array and this is the only acceptable datatype
         // Arrays are fixed in size
-        String[] welcomeMessages = {"Welcome to Nabnak", "1) Login", "2) Register", "3) Exit application"};
+        while(isRunning){ // while loop is when you have no idea how many iterations are required
+        String[] welcomeMessages = {"Welcome to Nabnak", "1) Login", "2) Register", "3) View members","4) Exit application"};
 
         System.out.println(welcomeMessages[0]);
         System.out.println(welcomeMessages[1]);
         System.out.println(welcomeMessages[2]);
-        System.out.println(welcomeMessages[3]);
         System.out.println(welcomeMessages[3]);
 
         // try-catch blocks are a major way to handle exceptions
@@ -35,7 +36,7 @@ public class MainDriver {
 
             // if your switch cases don't handle control flow it will result in fall-through
             // can be advantageous
-            switch (firstInput){
+            switch (firstInput) {
                 case "1": // if firstInput.equals("1") then this case will execute
                     System.out.println("User has selected login....");
                     break; // the keyword break prevents any fall-through
@@ -45,16 +46,26 @@ public class MainDriver {
                     break;
                 // case "i": // example of fall through
                 case "3":
-                    System.out.println("User is now exiting. Hope to see you soon!");
+                    System.out.println("User wishes to view other members");
+                    String[] members = readFile();
+                    for(String member: members){ // enhanced for loop with arrays
+                        System.out.println(member);
+                    }
                     break;
+                case "4":
+                    System.out.println("User is now exiting. Hope to see you soon!");
+                    isRunning = false;
+                    break;
+
                 default:
                     System.out.println("User has not selected valid input....");
-
-
             }
-        } catch (IOException e){ // Catches that exception and assigns to variable e
+        } catch (IOException e) { // Catches that exception and assigns to variable e
             e.printStackTrace();
         }
+        // Please for the love of all that is beautiful in the world DO NOT DO THIS
+        //main(args); // This is known as recursion, it's a method calling itself
+    }
     }
 
     // Custom method to implement a registration process
@@ -94,5 +105,31 @@ public class MainDriver {
         } catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    public static String[] readFile(){ // we want to return information from this method
+        String[] members = new String[10];
+
+        // try-with-resources automatically closes files for us
+        try(
+                FileReader fileReader = new FileReader("resources/data.txt");
+                BufferedReader reader = new BufferedReader(fileReader);
+                ) {
+
+            String line = reader.readLine();
+            int index = 0;
+
+            while(line != null){
+                members[index] = line;
+                index++;
+                line = reader.readLine(); // this reassign line and if there aare no more values in the file it will result in a null
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        } finally { //finally always executs
+            System.out.println("Hello from the finally block");
+        }
+
+        return members;
     }
 }
