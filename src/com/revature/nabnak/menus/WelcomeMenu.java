@@ -6,6 +6,8 @@ import com.revature.nabnak.util.MenuRouter;
 import java.io.*;
 import java.time.LocalDateTime;
 
+import static com.revature.nabnak.util.AppState.shutdown;
+
 public class WelcomeMenu extends Menu {
 
     public WelcomeMenu(BufferedReader terminalReader, MenuRouter menuRouter) {
@@ -21,6 +23,7 @@ public class WelcomeMenu extends Menu {
         System.out.println(welcomeMessages[1]);
         System.out.println(welcomeMessages[2]);
         System.out.println(welcomeMessages[3]);
+        System.out.println(welcomeMessages[4]);
 
         String firstInput = terminalReader.readLine(); // it throws an IOException, this MUST be handled before compile time (checked)
 
@@ -41,6 +44,7 @@ public class WelcomeMenu extends Menu {
                 break;
             case "4":
                 System.out.println("User is now exiting. Hope to see you soon!");
+                shutdown();
                 break;
 
             default:

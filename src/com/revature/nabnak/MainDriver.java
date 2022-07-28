@@ -8,6 +8,7 @@ import com.revature.nabnak.menus.DashboardMenu;
 import com.revature.nabnak.menus.RegisterMenu;
 import com.revature.nabnak.menus.WelcomeMenu;
 import com.revature.nabnak.models.Member;
+import com.revature.nabnak.util.AppState;
 import com.revature.nabnak.util.MenuRouter;
 
 import java.io.*;
@@ -19,22 +20,8 @@ public class MainDriver {
 
     public static void main(String[] args) {
 
-        boolean isRunning = true;
-
-        BufferedReader terminalReader = new BufferedReader(new InputStreamReader(System.in));
-        MenuRouter menuRouter = new MenuRouter();
-
-        WelcomeMenu welcomeMenu = new WelcomeMenu(terminalReader, menuRouter);
-        RegisterMenu registerMenu = new RegisterMenu(terminalReader, menuRouter);
-        DashboardMenu dashboardMenu = new DashboardMenu(terminalReader, menuRouter);
-
-        menuRouter.addMenu(welcomeMenu);
-        menuRouter.addMenu(registerMenu);
-        menuRouter.addMenu(dashboardMenu);
-
-        while (isRunning) {
-            menuRouter.transfer("/welcome");
-        }
+        AppState appState = new AppState();
+        appState.startup();
 
     }
 
