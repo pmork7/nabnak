@@ -42,6 +42,8 @@ public class AppState {
     }
 
     public static void shutdown(){
+
         isRunning = false;
+
     }
 }
