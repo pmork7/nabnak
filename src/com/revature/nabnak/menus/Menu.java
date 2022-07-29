@@ -11,14 +11,11 @@ public abstract class Menu { // abstract classs
     protected String route;
     protected BufferedReader terminalReader; //Dependency Injection - as a requirement for the class to function that you want to inject at Instantiate
     protected MenuRouter menuRouter;
-    public CustomLogger customLogger;
-
-    public Menu(String name, String route, BufferedReader terminalReader, MenuRouter menuRouter, CustomLogger customLogger){
+    public Menu(String name, String route, BufferedReader terminalReader, MenuRouter menuRouter){
         this.name = name;
         this.route = route;
         this.terminalReader = terminalReader;
         this.menuRouter = menuRouter;
-        this.customLogger = customLogger;
     }
 
     public String getName(){

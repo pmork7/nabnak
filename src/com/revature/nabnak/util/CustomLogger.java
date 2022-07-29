@@ -19,6 +19,7 @@ public class CustomLogger {
     private final boolean printToConsole;
     private final Writer logWriter;
 
+    // Singleton - there is only a single place where the class can be instaniated
     private CustomLogger(boolean printToConsole) {
         Writer writer = null;
         this.printToConsole = printToConsole;
@@ -31,6 +32,7 @@ public class CustomLogger {
         this.logWriter = writer;
     }
 
+    // TODO: What's with the logger == null?
     public static CustomLogger getLogger(boolean printToConsole) {
         // Lazy singleton
         if(logger == null) {
@@ -92,7 +94,7 @@ public class CustomLogger {
         return String.format("[%s] %s at %s", level, message, LocalDateTime.now());
     }
 
-    public void log(String message, Object... extra) {
+    public void log(String message, Object... extra) { // This is variable arguments handles x amount of arguments passed after the String message
         try(Writer logWriter = new FileWriter("resources/log.txt", true);) {
 
             String messFormated = String.format(message, extra);

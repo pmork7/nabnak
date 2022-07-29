@@ -12,9 +12,10 @@ import java.io.IOException;
 public class LoginMenu extends Menu{
 
     MemberService memberService = new MemberService();
+    CustomLogger customLogger = CustomLogger.getLogger(true);
 
-    public LoginMenu(BufferedReader terminalReader, MenuRouter menuRouter, CustomLogger customLogger) {
-        super("Login", "/login", terminalReader, menuRouter, customLogger);
+    public LoginMenu(BufferedReader terminalReader, MenuRouter menuRouter) {
+        super("Login", "/login", terminalReader, menuRouter);
     }
 
     @Override

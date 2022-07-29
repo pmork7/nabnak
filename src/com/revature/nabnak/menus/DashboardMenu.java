@@ -9,8 +9,8 @@ import java.io.IOException;
 import static com.revature.nabnak.util.AppState.shutdown;
 
 public class DashboardMenu extends Menu{
-    public DashboardMenu(BufferedReader terminalReader, MenuRouter menuRouter, CustomLogger customLogger) {
-        super("Dashboard", "/dashboard", terminalReader, menuRouter, customLogger);
+    public DashboardMenu(BufferedReader terminalReader, MenuRouter menuRouter) {
+        super("Dashboard", "/dashboard", terminalReader, menuRouter);
     }
 
     @Override

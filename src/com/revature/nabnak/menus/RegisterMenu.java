@@ -12,8 +12,9 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class RegisterMenu extends Menu{
-    public RegisterMenu(BufferedReader terminalReader, MenuRouter menuRouter, CustomLogger customLogger) {
-        super("Register", "/register", terminalReader, menuRouter, customLogger);
+    CustomLogger customLogger = CustomLogger.getLogger(true);
+    public RegisterMenu(BufferedReader terminalReader, MenuRouter menuRouter) {
+        super("Register", "/register", terminalReader, menuRouter);
     }
 
     @Override

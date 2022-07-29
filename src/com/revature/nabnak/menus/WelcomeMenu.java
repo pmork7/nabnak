@@ -11,9 +11,10 @@ import java.time.LocalDateTime;
 import static com.revature.nabnak.util.AppState.shutdown;
 
 public class WelcomeMenu extends Menu {
+    CustomLogger customLogger = CustomLogger.getLogger(true);
 
-    public WelcomeMenu(BufferedReader terminalReader, MenuRouter menuRouter, CustomLogger  customLogger) {
-        super("Welcome", "/welcome", terminalReader, menuRouter, customLogger);
+    public WelcomeMenu(BufferedReader terminalReader, MenuRouter menuRouter) {
+        super("Welcome", "/welcome", terminalReader, menuRouter);
     }
 
     @Override // this indicates we are overriding the method we are inheriting

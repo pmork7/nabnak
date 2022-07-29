@@ -22,7 +22,6 @@ public class MainDriver {
 
         AppState appState = new AppState();
         appState.startup();
-
     }
 
 

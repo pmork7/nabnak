@@ -20,10 +20,10 @@ public class AppState {
 
         BufferedReader terminalReader = new BufferedReader(new InputStreamReader(System.in));
 
-        WelcomeMenu welcomeMenu = new WelcomeMenu(terminalReader, menuRouter, customLogger);
-        RegisterMenu registerMenu = new RegisterMenu(terminalReader, menuRouter, customLogger);
-        DashboardMenu dashboardMenu = new DashboardMenu(terminalReader, menuRouter, customLogger);
-        LoginMenu loginMenu = new LoginMenu(terminalReader, menuRouter, customLogger);
+        WelcomeMenu welcomeMenu = new WelcomeMenu(terminalReader, menuRouter);
+        RegisterMenu registerMenu = new RegisterMenu(terminalReader, menuRouter);
+        DashboardMenu dashboardMenu = new DashboardMenu(terminalReader, menuRouter);
+        LoginMenu loginMenu = new LoginMenu(terminalReader, menuRouter);
 
         menuRouter.addMenu(welcomeMenu);
         menuRouter.addMenu(registerMenu);
