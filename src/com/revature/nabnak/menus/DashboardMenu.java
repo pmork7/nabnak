@@ -1,5 +1,6 @@
 package com.revature.nabnak.menus;
 
+import com.revature.nabnak.util.CustomLogger;
 import com.revature.nabnak.util.MenuRouter;
 
 import java.io.BufferedReader;
@@ -8,8 +9,8 @@ import java.io.IOException;
 import static com.revature.nabnak.util.AppState.shutdown;
 
 public class DashboardMenu extends Menu{
-    public DashboardMenu(BufferedReader terminalReader, MenuRouter menuRouter) {
-        super("Dashboard", "/dashboard", terminalReader, menuRouter);
+    public DashboardMenu(BufferedReader terminalReader, MenuRouter menuRouter, CustomLogger customLogger) {
+        super("Dashboard", "/dashboard", terminalReader, menuRouter, customLogger);
     }
 
     @Override

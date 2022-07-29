@@ -1,6 +1,8 @@
 package com.revature.nabnak.menus;
 
 import com.revature.nabnak.models.Member;
+import com.revature.nabnak.services.MemberService;
+import com.revature.nabnak.util.CustomLogger;
 import com.revature.nabnak.util.MenuRouter;
 
 import java.io.*;
@@ -10,8 +12,8 @@ import static com.revature.nabnak.util.AppState.shutdown;
 
 public class WelcomeMenu extends Menu {
 
-    public WelcomeMenu(BufferedReader terminalReader, MenuRouter menuRouter) {
-        super("Welcome", "/welcome", terminalReader, menuRouter);
+    public WelcomeMenu(BufferedReader terminalReader, MenuRouter menuRouter, CustomLogger  customLogger) {
+        super("Welcome", "/welcome", terminalReader, menuRouter, customLogger);
     }
 
     @Override // this indicates we are overriding the method we are inheriting
@@ -32,15 +34,22 @@ public class WelcomeMenu extends Menu {
         switch (firstInput) {
             case "1": // if firstInput.equals("1") then this case will execute
                 System.out.println("User has selected login....");
+                menuRouter.transfer("/login");
                 break; // the keyword break prevents any fall-through
             case "2":
                 System.out.println("User has selected register....");
+                customLogger.info("Now routing user to registration page");
                 menuRouter.transfer("/register");
                 break;
             // case "i": // example of fall through
             case "3":
                 System.out.println("User wishes to view other members");
-
+                //TODO: NEW READ ME(Lines 44-49)
+                MemberService memberService = new MemberService();
+                Member[] members = memberService.readAll();
+                for(Member member: members){
+                    System.out.println(member);
+                }
                 break;
             case "4":
                 System.out.println("User is now exiting. Hope to see you soon!");
@@ -51,39 +60,6 @@ public class WelcomeMenu extends Menu {
                 System.out.println("User has not selected valid input....");
 
         }
-    }
-    private Member[] readFile() { // we want to return information from this method
-        Member[] members = new Member[10];
-
-        // try-with-resources automatically closes files for us
-        try (
-                FileReader fileReader = new FileReader("resources/data.txt");
-                BufferedReader reader = new BufferedReader(fileReader);
-        ) {
-
-            String line = reader.readLine();
-            int index = 0;
-
-            while (line != null) {
-                String[] info = line.split(",");
-                Member member = new Member();
-                member.setEmail(info[0]);
-                member.setFullName(info[1]);
-                // Wrapper classes auto box (can convert back to the primitive value)
-                member.setExperienceMonths(Integer.parseInt(info[2])); // how does the Integer Class become the primitive int?
-                member.setRegistrationDate(info[3]);
-                member.setPassword(info[4]);
-                members[index] = member; // swapped from String line to Member member (this requires a datatype of member)
-                index++;
-                line = reader.readLine(); // this reassign line and if there aare no more values in the file it will result in a null
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally { //finally always executs
-            System.out.println("Hello from the finally block");
-        }
-
-        return members;
     }
 
 }

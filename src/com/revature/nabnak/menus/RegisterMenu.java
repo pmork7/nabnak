@@ -2,6 +2,7 @@ package com.revature.nabnak.menus;
 
 import com.revature.nabnak.models.Member;
 import com.revature.nabnak.services.MemberService;
+import com.revature.nabnak.util.CustomLogger;
 import com.revature.nabnak.util.MenuRouter;
 
 import java.io.BufferedReader;
@@ -11,8 +12,8 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class RegisterMenu extends Menu{
-    public RegisterMenu(BufferedReader terminalReader, MenuRouter menuRouter) {
-        super("Register", "/register", terminalReader, menuRouter);
+    public RegisterMenu(BufferedReader terminalReader, MenuRouter menuRouter, CustomLogger customLogger) {
+        super("Register", "/register", terminalReader, menuRouter, customLogger);
     }
 
     @Override
@@ -28,9 +29,8 @@ public class RegisterMenu extends Menu{
         try {
             experienceMonths = Integer.parseInt(terminalReader.readLine());
         } catch (NumberFormatException e){
-            e.printStackTrace();
-            System.out.println("Invalid number enter please try the registration again");
-            menuRouter.transfer("/welcome");
+            customLogger.warn("Invalid number enter please try the registration again");
+            menuRouter.transfer("/register");
         }
         System.out.print("Please enter your password: \n>");
         String password = terminalReader.readLine();
@@ -43,10 +43,11 @@ public class RegisterMenu extends Menu{
         // System.out.printf("New user has registerd under \n User:%s,%s,%s,%s", email, fullName, experienceMonths, registrationDate).println(); //printf is a formatter
 
         Member newMember = new Member(email, fullName, experienceMonths, registrationDate, password);
-        // TODO: LOGG INFO AS ENTER customerLogger.log(arguments)
+        //TODO: LOGG INFO AS ENTER customerLogger.log(arguments)
         MemberService memberService = new MemberService();
         memberService.registerMember(newMember);
 
+        customLogger.info("Navigating to dashboard for " + newMember.getEmail());
         menuRouter.transfer("/dashboard");
     }
 }
