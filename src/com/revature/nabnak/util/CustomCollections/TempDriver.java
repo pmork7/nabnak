@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 public class TempDriver {
 
     public static void main(String[] args) {
-        LinkedList<Member> members = new LinkedList<>();
+        /*LinkedList<Member> members = new LinkedList<>();
 
         members.add(new Member());
         members.add(new Member());
@@ -26,7 +26,14 @@ public class TempDriver {
         numList.add(1);
         numList.add(12);
 
-        System.out.println(numList.contains(91));
+        System.out.println(numList.contains(91));*/
+        ArrayList test = new ArrayList();
+        test.add(1);
+        test.add(2);
+        test.add(3);
+        System.out.println(test.isEmpty());
+        System.out.println(test.contains(5));
+        System.out.println(test.toString());
 
     }
 }
